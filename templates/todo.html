@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Aplikasi Todo</title>
+    <style>
+      .completed {
+        text-decoration: line-through;
+      }
+
+      .not-completed {
+        text-decoration: none;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Daftar Todo</h1>
+    <form action="/add" method="POST">
+      <input type="text" name="title" placeholder="Tambahkan tugas baru" />
+      <input type="submit" value="Tambahkan" />
+    </form>
+    <ul>
+      {{range .todos}}
+      <li>
+        <span class="{{if .Completed}}completed{{else}}not-completed{{end}}">
+          {{.Title}}
+        </span>
+
+        <form action="/update/{{.ID}}" method="POST">
+          <input
+            type="submit"
+            value="{{if .Completed}}Tandai sebagai Belum Selesai{{else}}Tandai sebagai Selesai{{end}}"
+          />
+        </form>
+        <form action="/delete/{{.ID}}" method="POST">
+          <input
+            type="submit"
+            value="Hapus"
+            onclick="return confirm('yakin?');"
+          />
+        </form>
+      </li>
+      {{end}}
+    </ul>
+  </body>
+</html>
